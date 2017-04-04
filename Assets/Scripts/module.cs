@@ -103,7 +103,7 @@ public class module : MonoBehaviour {
             me_clone.GetChild(0).GetComponent<module>()._myType = _myType;
             me_clone.GetChild(0).GetComponent<module>()._myClass = _myClass;
             me_clone.GetChild(0).GetComponent<module>()._myState = module.ModuleState.Real;
-            return me_clone;
+            return me_clone.GetChild(0);
         } else {
             return transform;
         }

@@ -77,6 +77,8 @@ public class button : MonoBehaviour {
         module.ModuleClass class2 = 0;
         module.ModuleType type1 = 0;
         module.ModuleType type2 = 0;
+        Debug.Log("Spot1: " + _spot1.name);
+        Debug.Log("Spot2: " + _spot2.name);
         foreach (Transform child in _spot1) {
             if (!child.name.Equals("Cube")) {
                 if (child.childCount == 0) {
