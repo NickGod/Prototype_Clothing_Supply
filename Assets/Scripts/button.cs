@@ -79,22 +79,32 @@ public class button : MonoBehaviour {
         module.ModuleType type2 = 0;
         foreach (Transform child in _spot1) {
             if (!child.name.Equals("Cube")) {
-                class1 = child.GetComponent<module>()._myClass;
-                type1 = child.GetComponent<module>()._myType;
-                validNum++;
-                Destroy(child.gameObject);
+                if (child.childCount == 0) {
+                    continue;
+                } else {
+                    class1 = child.GetChild(0).GetComponent<module>()._myClass;
+                    type1 = child.GetChild(0).GetComponent<module>()._myType;
+                    validNum++;
+                    Destroy(child.gameObject);
+                }
             }
         }
         foreach (Transform child in _spot2) {
+
             if (!child.name.Equals("Cube")) {
-                class2 = child.GetComponent<module>()._myClass;
-                type2 = child.GetComponent<module>()._myType;
-                validNum++;
+                if (child.childCount == 0) {
+                    continue;
+                } else {
+                    class2 = child.GetChild(0).GetComponent<module>()._myClass;
+                    type2 = child.GetChild(0).GetComponent<module>()._myType;
+                    validNum++;
+                    Destroy(child.gameObject);
+                }
             }
         }
         foreach (Transform child in _spotout) {
             if (!child.name.Equals("Cube")) {
-                Destroy(child);
+                Destroy(child.gameObject);
             }
         }
 
@@ -140,9 +150,9 @@ public class button : MonoBehaviour {
         cloneOBJ.localScale = originSize;
 
         //initialize attribute value
-        cloneOBJ.GetComponent<module>()._myType = targetType;
-        cloneOBJ.GetComponent<module>()._myClass = targetClass;
-        cloneOBJ.GetComponent<module>()._myState = module.ModuleState.Real;
+        cloneOBJ.GetChild(0).GetComponent<module>()._myType = targetType;
+        cloneOBJ.GetChild(0).GetComponent<module>()._myClass = targetClass;
+        cloneOBJ.GetChild(0).GetComponent<module>()._myState = module.ModuleState.Real;
     }
 
     public void PressButton() {

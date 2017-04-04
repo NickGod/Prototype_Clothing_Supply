@@ -87,7 +87,7 @@ public class hand : MonoBehaviour {
                         }
                         if (_grabbed) {
                             _grabbedParent = null;
-                            _grabbed.parent = transform;
+                            _grabbed.parent.parent = transform;
                         }
                     }
                 }
@@ -96,7 +96,7 @@ public class hand : MonoBehaviour {
             //grabbing release
             if (!IsFist()) {
                 if (_grabbed) {
-                    _grabbed.parent = _grabbedParent;
+                    _grabbed.parent.parent = _grabbedParent;
                     LoseControl();
                 }
                 _isFist = false;
