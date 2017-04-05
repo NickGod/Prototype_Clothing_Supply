@@ -134,9 +134,5 @@ public class module : MonoBehaviour {
         return clostest;
     }
     
-
-    public void move_towards(Vector3 taret_pos) {
-        transform.position += 0.05f * (taret_pos - transform.position);
-    }
     
 }
