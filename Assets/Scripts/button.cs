@@ -61,24 +61,24 @@ public class button : MonoBehaviour {
             preferredClass1 = module.ModuleClass.Design;
             preferredClass2 = module.ModuleClass.Cube;
             targetClass = module.ModuleClass.Model;
-            _robot = GameObject.Find("alien_engi1a(1)").transform;
+            _robot = GameObject.Find("alien_engi1a (1)").transform;
             targetObjGroupIndex = 0;
         } else if (_parent.name.EndsWith("2")) {
             preferredClass1 = module.ModuleClass.Mesh;
             preferredClass2 = module.ModuleClass.Model;
             targetClass = module.ModuleClass.Human;
-            _robot = GameObject.Find("alien_engi1a(2)").transform;
+            _robot = GameObject.Find("alien_engi1a (2)").transform;
             targetObjGroupIndex = 1;
         } else {
             preferredClass1 = module.ModuleClass.Anim;
             preferredClass2 = module.ModuleClass.Human;
             targetClass = module.ModuleClass.AnimHuman;
-            _robot = GameObject.Find("alien_engi1a(3)").transform;
+            _robot = GameObject.Find("alien_engi1a (3)").transform;
             targetObjGroupIndex = 2;
             _isFinalSpot = true;
         }
         _originPos = _robot.position;
-        _factory = _robot.position - _robot.right * 2.7f;
+        _factory = _robot.position - _robot.up * 2.7f;
     }
 
     void Update() {
@@ -222,6 +222,6 @@ public class button : MonoBehaviour {
     }
 
     public void move_towards(Vector3 taret_pos) {
-        _robot.position += 0.05f * (taret_pos - _robot.position);
+        _robot.position += (taret_pos - _robot.position) * Time.deltaTime;
     }
 }
