@@ -201,12 +201,14 @@ public class button : MonoBehaviour {
 
     public void PressButton() {
         _myButton.position += _myButton.forward * 0.013f;
-        if (Validate()) {
-            _isWorking = true;
-            _movingTarget = _factory;
-            _robot.Rotate(0, 0, 180f);
+        if (!_isWorking) {
+            if (Validate()) {
+                _isWorking = true;
+                _movingTarget = _factory;
+                _robot.Rotate(0, 0, 180f);
+            }
+            targetType = 0;
         }
-        targetType = 0;
     }
 
     public void ReleaseButton() {
