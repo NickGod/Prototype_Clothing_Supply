@@ -31,7 +31,6 @@ public class module : MonoBehaviour {
     
     // Use this for initialization
 	void Start () {
-        _myState = ModuleState.Inventory;
         
         spot[0] = GameObject.Find("slotIn1_1").transform;
         spot[1] = GameObject.Find("slotIn1_2").transform;
