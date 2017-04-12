@@ -21,7 +21,7 @@ public class module : MonoBehaviour {
         Human
     };
 
-    Transform[] spot = new Transform[6];
+    Transform[] spot = new Transform[7];
 
     public ModuleState _myState;
     public ModuleClass _myClass;
@@ -38,6 +38,7 @@ public class module : MonoBehaviour {
         spot[3] = GameObject.Find("slotIn2_2").transform;
         spot[4] = GameObject.Find("slotIn3_1").transform;
         spot[5] = GameObject.Find("slotIn3_2").transform;
+        spot[6] = GameObject.Find("Table").transform;
 
         string[] parts = transform.parent.name.Split('_');
         switch (parts[0]) {
@@ -111,14 +112,38 @@ public class module : MonoBehaviour {
     public void OnRelease(hand _playerHand) {
         transform.parent.localScale = originSize;
         transform.parent.rotation = Quaternion.identity;
+        if (_myClass == ModuleClass.AnimHuman) {
+            Debug.Log("LossyScaleX: " + spot[6].lossyScale.x);
+            if (WithinRange(spot[6], spot[6].lossyScale.x, spot[6].lossyScale.z, 0.0f)) {
+                Vector3 pos = transform.parent.position;
+                pos.y = spot[6].position.y;
+                transform.parent.position = pos;
+                return;
+            }
+        }
         Transform target = GetClostestSpot();
         if (target.childCount > 0) {
-            foreach(Transform child in target) {
+            foreach (Transform child in target) {
                 Destroy(child.gameObject);
             }
         }
         transform.parent.position = target.position;
         transform.parent.parent = target;
+    }
+
+    bool WithinRange(Transform target, float xLength, float zlength, float offset) {
+        float xEdge1 = target.position.x + xLength / 2 - offset;
+        float xEdge2 = target.position.x - xLength / 2 + offset;
+
+        float zEdge1 = target.position.z + zlength / 2 - offset;
+        float zEdge2 = target.position.z - zlength / 2 + offset;
+
+        if ((transform.position.x - xEdge1) * (transform.position.x - xEdge2) < 0 &&
+            (transform.position.z - zEdge1) * (transform.position.z - zEdge2) < 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     Transform GetClostestSpot() {
