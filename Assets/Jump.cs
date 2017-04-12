@@ -5,18 +5,21 @@ using UnityEngine;
 public class Jump : MonoBehaviour {
 
   public Vector3 jump_height;
+  public bool startJumping = false;
 	// Use this for initialization
 	void Start () {
 
-    jump_height = new Vector3(transform.localPosition.x, transform.localPosition.y+1, transform.localPosition.z);
-    Vector3 local_position = transform.localPosition;
-    StartCoroutine(JumpAction(transform, local_position, jump_height, 0.1f));
+    jump_height = new Vector3(transform.position.x, transform.position.y+0.1f, transform.position.z);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+		if (startJumping)
+    {
+      StartCoroutine(JumpAction(transform, transform.position, jump_height, 0.1f));
+      startJumping = false;
+    }
+  }
 
   IEnumerator JumpAction(Transform objectToMove, Vector3 a, Vector3 b, float speed)
   {
