@@ -14,19 +14,25 @@ public class Jump : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (startJumping)
-    {
-      StartCoroutine(JumpAction(transform, transform.position, jump_height, 0.1f));
-      startJumping = false;
-    }
+		//if (startJumping)
+    //{
+     // StartCoroutine(JumpAction(transform, transform.position, jump_height, 0.1f));
+      //startJumping = false;
+    //}
   }
 
+  public void StartJumpAnimation()
+  {
+    jump_height = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+
+    StartCoroutine(JumpAction(transform, transform.position, jump_height, 0.4f));
+  }
   IEnumerator JumpAction(Transform objectToMove, Vector3 a, Vector3 b, float speed)
   {
-    yield return new WaitForSeconds(1.0f);
+    yield return new WaitForSeconds(0.5f);
     yield return StartCoroutine(MoveFromTo(objectToMove, a, b, speed));
     yield return StartCoroutine(MoveFromTo(objectToMove, b, a, speed));
-    yield return StartCoroutine(JumpAction(transform, a, b, 0.1f));
+    yield return StartCoroutine(JumpAction(transform, a, b, 0.4f));
   }
   IEnumerator MoveFromTo(Transform objectToMove, Vector3 a, Vector3 b, float speed)
   {

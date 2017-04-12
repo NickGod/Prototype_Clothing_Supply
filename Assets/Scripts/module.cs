@@ -113,11 +113,12 @@ public class module : MonoBehaviour {
         transform.parent.localScale = originSize;
         transform.parent.rotation = Quaternion.identity;
         if (_myClass == ModuleClass.AnimHuman) {
-            Debug.Log("LossyScaleX: " + spot[6].lossyScale.x);
             if (WithinRange(spot[6], spot[6].lossyScale.x, spot[6].lossyScale.z, 0.0f)) {
                 Vector3 pos = transform.parent.position;
-                pos.y = spot[6].position.y;
+                pos.y = spot[6].position.y + spot[6].lossyScale.y / 2;
                 transform.parent.position = pos;
+                // start jumping animation
+                transform.parent.gameObject.GetComponent<Jump>().StartJumpAnimation();
                 return;
             }
         }
