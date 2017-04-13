@@ -111,7 +111,6 @@ public class module : MonoBehaviour {
 
     public void OnRelease(hand _playerHand) {
         transform.parent.localScale = originSize;
-        transform.parent.rotation = Quaternion.identity;
         if (_myClass == ModuleClass.AnimHuman) {
             if (WithinRange(spot[6], spot[6].lossyScale.x, spot[6].lossyScale.z, 0.0f)) {
                 Vector3 pos = transform.parent.position;
@@ -119,17 +118,32 @@ public class module : MonoBehaviour {
                 transform.parent.position = pos;
                 // start jumping animation
                 transform.parent.gameObject.GetComponent<Jump>().StartJumpAnimation();
+                transform.parent.rotation = Quaternion.AngleAxis(90, Vector3.up);
                 return;
             }
         }
-        Transform target = GetClostestSpot();
-        if (target.childCount > 0) {
-            foreach (Transform child in target) {
+        int targetIndex = GetClostestSpot();
+        switch (targetIndex / 2) {
+            case 0:
+                transform.parent.rotation = Quaternion.AngleAxis(180, Vector3.up);
+                break;
+            case 1:
+                transform.parent.rotation = Quaternion.AngleAxis(270, Vector3.up);
+                break;
+            case 2:
+                transform.parent.rotation = Quaternion.AngleAxis(0, Vector3.up);
+                break;
+            default:
+                break;
+
+        }
+        if (spot[targetIndex].childCount > 0) {
+            foreach (Transform child in spot[targetIndex]) {
                 Destroy(child.gameObject);
             }
         }
-        transform.parent.position = target.position;
-        transform.parent.parent = target;
+        transform.parent.position = spot[targetIndex].position;
+        transform.parent.parent = spot[targetIndex];
     }
 
     bool WithinRange(Transform target, float xLength, float zlength, float offset) {
@@ -147,16 +161,16 @@ public class module : MonoBehaviour {
         }
     }
 
-    Transform GetClostestSpot() {
+    int GetClostestSpot() {
         float distance = float.MaxValue;
-        Transform clostest = null;
+        int index = -1;
         for (int i = 0; i < 6; i++) {
             if (Vector3.Distance(transform.position, spot[i].position) < distance) {
                 distance = Vector3.Distance(transform.position, spot[i].position);
-                clostest = spot[i];
+                index = i;
             }
         }
-        return clostest;
+        return index;
     }
     
     

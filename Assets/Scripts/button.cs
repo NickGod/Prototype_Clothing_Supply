@@ -87,8 +87,10 @@ public class button : MonoBehaviour {
             if (isClosed(_movingTarget)) {
                 if (_movingTarget == _originPos) {
                     _isWorking = false;
-                    _robot.GetChild(2).GetChild(0).position = _spotout.position;
-                    _robot.GetChild(2).GetChild(0).parent = _spotout;
+                    Transform outTrf = _robot.GetChild(2).GetChild(0);
+                    outTrf.position = _spotout.position;
+                    outTrf.parent = _spotout;
+                    outTrf.localScale = originSize;
                 } else {
                     _movingTarget = _originPos;
                     _robot.Rotate(0, 0, 180f);
@@ -195,7 +197,13 @@ public class button : MonoBehaviour {
         Transform cloneOBJ = Instantiate(targetObj).transform;
         cloneOBJ.position = _robot.GetChild(2).position;
         cloneOBJ.parent = _robot.GetChild(2);
-        cloneOBJ.rotation = Quaternion.identity;
+        if (transform.parent.name.EndsWith("1")) {
+            cloneOBJ.rotation = Quaternion.AngleAxis(180, Vector3.up);
+        } else if (transform.parent.name.EndsWith("2")) {
+            cloneOBJ.rotation = Quaternion.AngleAxis(270, Vector3.up);
+        } else if (transform.parent.name.EndsWith("3")) {
+            cloneOBJ.rotation = Quaternion.AngleAxis(0, Vector3.up);
+        }
         cloneOBJ.localScale = originSize;
 
         //initialize attribute value
