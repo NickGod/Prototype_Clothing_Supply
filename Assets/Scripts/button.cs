@@ -146,8 +146,7 @@ public class button : MonoBehaviour {
         }
 
         if (validNum == 2) {
-            if (class1 == preferredClass1 && class2 == preferredClass2 ||
-                class1 == preferredClass2 && class2 == preferredClass1) {
+            if (IsRightClass(class1,class2)) {
                 if (type1 == type2) {
                     if (_isFinalSpot) {
                         if (type1 == module.ModuleType.Human) {
@@ -191,7 +190,27 @@ public class button : MonoBehaviour {
         child2 = null;
         return false;
     }
-
+    bool IsRightClass(module.ModuleClass class1, module.ModuleClass class2) {
+        if (transform.parent.name.EndsWith("1")) {
+            if (class1 == preferredClass1 && class2 == preferredClass2) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (transform.parent.name.EndsWith("2")) {
+            if (class1 == preferredClass2 && class2 == preferredClass1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else{
+            if (class1 == preferredClass2 && class2 == preferredClass1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
     void Generate() {
         
         Transform cloneOBJ = Instantiate(targetObj).transform;
