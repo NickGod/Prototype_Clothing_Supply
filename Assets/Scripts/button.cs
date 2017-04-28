@@ -183,11 +183,14 @@ public class button : MonoBehaviour {
         } else {
             Debug.Log("Err: not enough elements");
         }
-
-        Destroy(child1.gameObject);
-        Destroy(child2.gameObject);
-        child1 = null;
-        child2 = null;
+        if (child1 != null) {
+            Destroy(child1.gameObject);
+            child1 = null;
+        }
+        if (child2 != null) {
+            Destroy(child2.gameObject);
+            child2 = null;
+        }
         return false;
     }
     bool IsRightClass(module.ModuleClass class1, module.ModuleClass class2) {
